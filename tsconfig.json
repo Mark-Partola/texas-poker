@@ -1,15 +1,12 @@
 {
   "compilerOptions": {
     "module": "commonjs",
+    "outDir": "dist",
     "target": "es6",
     "strict": true,
     "preserveConstEnums": true,
     "sourceMap": true,
-    "typeRoots": ["./node_modules/@types"],
-    "lib": ["esnext"],
-    "baseUrl": "src",
-    "paths": {
-      "*": ["./types/domain.d.ts"]
-    }
+    "typeRoots": ["./node_modules/@types", "./src/types"],
+    "lib": ["esnext"]
   }
 }

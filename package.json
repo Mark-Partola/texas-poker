@@ -4,12 +4,16 @@
   "description": "",
   "main": "",
   "scripts": {
-    "start": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' src/app.ts"
+    "start:ts": "tsc -w",
+    "start:watch": "nodemon ./dist/app.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/dotenv": "^6.1.0",
+    "@types/uuid": "^3.4.4",
+    "@types/ws": "^6.0.1",
     "nodemon": "^1.18.9",
     "rollup": "^1.1.2",
     "rollup-plugin-commonjs": "^9.2.0",
@@ -19,6 +23,9 @@
     "typescript": "^3.2.4"
   },
   "dependencies": {
-    "@vaalentin/game-loop": "^1.0.2"
+    "@vaalentin/game-loop": "^1.0.2",
+    "dotenv": "^6.2.0",
+    "uuid": "^3.3.2",
+    "ws": "^6.1.3"
   }
 }

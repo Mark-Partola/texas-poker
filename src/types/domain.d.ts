@@ -4,7 +4,12 @@ interface ICard {
 }
 
 interface IUser {
+  getId(): string;
   setHand(cards: ICard[]): void;
+}
+
+interface IUserFactory {
+  produce(): IUser;
 }
 
 interface IDeck {
