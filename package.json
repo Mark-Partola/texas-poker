@@ -4,16 +4,18 @@
   "description": "",
   "main": "",
   "scripts": {
-    "start": "rollup -c -w"
+    "start": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' src/app.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "nodemon": "^1.18.9",
     "rollup": "^1.1.2",
     "rollup-plugin-commonjs": "^9.2.0",
     "rollup-plugin-node-resolve": "^4.0.0",
     "rollup-plugin-typescript2": "^0.19.2",
+    "ts-node": "^8.0.2",
     "typescript": "^3.2.4"
   },
   "dependencies": {
