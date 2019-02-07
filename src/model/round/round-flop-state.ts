@@ -10,9 +10,7 @@ export class RoundFlopState implements IRoundState {
 
     console.log("await bets round flop");
 
-    setTimeout(() => {
-      this.process();
-    }, 1000);
+    this.round.trade().then(() => this.process());
   }
 
   public process(): void {

@@ -1,4 +1,5 @@
-import { Deck } from "../deck";
+import { Deck } from "../deck/deck";
+import { Trading } from "../trading/trading";
 import { RoundIdleState } from "./round-idle-state";
 import { RoundPreflopState } from "./round-preflop-state";
 import { RoundFlopState } from "./round-flop-state";
@@ -55,6 +56,13 @@ export class Round implements IRoundStateContext {
 
   public getTable(): ITable {
     return this.config.table;
+  }
+
+  public trade(): Promise<void> {
+    const users = this.getUsers();
+    const trading = new Trading({ users });
+
+    return trading.start();
   }
 
   public isActive(): boolean {

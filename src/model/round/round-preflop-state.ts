@@ -9,9 +9,7 @@ export class RoundPreflopState implements IRoundState {
 
     console.log("await bets round preflop");
 
-    setTimeout(() => {
-      this.process();
-    }, 1000);
+    this.round.trade().then(() => this.process());
   }
 
   public process(): void {

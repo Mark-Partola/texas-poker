@@ -6,10 +6,6 @@ export class RoundShowdownState implements IRoundState {
 
     console.log(this.round.getTable().getCards());
     console.log(this.round.getUsers());
-
-    setTimeout(() => {
-      this.process();
-    }, 1000);
   }
 
   public process(): void {}

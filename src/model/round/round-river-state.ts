@@ -9,9 +9,7 @@ export class RoundRiverState implements IRoundState {
 
     console.log("await bets round river");
 
-    setTimeout(() => {
-      this.process();
-    }, 1000);
+    this.round.trade().then(() => this.process());
   }
 
   public process(): void {

@@ -21,6 +21,10 @@ interface ITable {
   getCards(): ICard[];
 }
 
+interface ITrading {
+  start(): Promise<void>;
+}
+
 interface IRoundState {
   activate(): void;
   process(): void;
@@ -41,4 +45,5 @@ interface IRoundStateContext {
   getUsers(): IUser[];
   getDeck(): IDeck;
   getTable(): ITable;
+  trade(): Promise<void>;
 }

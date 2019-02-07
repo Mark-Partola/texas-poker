@@ -4,8 +4,6 @@ export class RoundIdleState implements IRoundState {
   public activate(): void {
     const users = this.round.getUsers();
 
-    console.log("await players");
-
     if (users.length > 1) {
       this.process();
     }
