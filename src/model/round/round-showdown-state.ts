@@ -13,6 +13,6 @@ export class RoundShowdownState implements IRoundState {
 
   public process(): void {
     const states = this.round.getStates();
-    this.round.setState(states.preflop);
+    this.round.setState(states.idle);
   }
 }

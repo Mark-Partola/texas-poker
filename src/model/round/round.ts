@@ -31,7 +31,7 @@ export class Round implements IRoundStateContext {
       throw new Error("Round is not finished yet");
     }
 
-    this.state.process();
+    this.state.activate();
   }
 
   public setState(state: IRoundState): void {
