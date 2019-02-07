@@ -18,7 +18,7 @@ export class Game {
 
   constructor(private readonly config: IGameConfig) {}
 
-  public addUser(user: IUser, placeIdx: number) {
+  public addUser(user: IUser, placeIdx?: number) {
     if (this.usersCount >= this.config.usersCount) {
       throw new Error("No places left");
     }

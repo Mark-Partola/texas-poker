@@ -5,14 +5,23 @@ interface ITableConfig {
 export class Table implements ITable {
   private board: ICard[] = [];
 
-  private places: (IUser | null)[] = Array.from({
-    length: this.config.placesCount
-  });
+  private places: (IUser | null)[] = Array.from(
+    { length: this.config.placesCount },
+    () => null
+  );
 
   constructor(private readonly config: ITableConfig) {}
 
-  public addUser(user: IUser, placeIdx: number): void {
-    this.places[placeIdx] = user;
+  public addUser(user: IUser, placeIdx?: number): void {
+    if (this.places.includes(user)) {
+      throw new Error("User already at the table");
+    }
+
+    const idx = placeIdx
+      ? placeIdx
+      : this.places.findIndex(place => place === null);
+
+    this.places[idx] = user;
   }
 
   public removeUser(user: IUser): void {

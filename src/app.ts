@@ -10,13 +10,16 @@ const game = new Game({
   usersCount: 4
 });
 
-const user = new User();
-game.addUser(user, 1);
+const socket = new Socket(new UserFactory());
 
-setTimeout(() => game.addUser(new User(), 0), 1000);
+socket.listen();
 
-setTimeout(() => game.removeUser(user), 10000);
+socket.on("user", params => {
+  console.log(params);
+});
 
-setTimeout(() => game.addUser(user, 2), 14000);
-
-new Socket(new UserFactory());
+socket.on("command", (params: { user: IUser; command: { type: string } }) => {
+  if (params.command.type === "join") {
+    game.addUser(params.user);
+  }
+});
