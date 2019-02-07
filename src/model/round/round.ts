@@ -1,5 +1,4 @@
 import { Table } from "../table";
-import { User } from "../user";
 import { RoundIdleState } from "./round-idle-state";
 import { RoundPreflopState } from "./round-preflop-state";
 import { RoundFlopState } from "./round-flop-state";

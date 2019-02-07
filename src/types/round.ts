@@ -1,5 +1,4 @@
 import { Table } from "../table";
-import { User } from "../user";
 import { RoundIdleState } from "./round-idle-state";
 import { RoundPreflopState } from "./round-preflop-state";
 import { RoundFlopState } from "./round-flop-state";
@@ -43,7 +42,7 @@ export class Round implements IRoundStateContext {
     return this.states;
   }
 
-  public getUsers(): User[] {
+  public getUsers(): IUser[] {
     return this.config.table.getUsers();
   }
 
