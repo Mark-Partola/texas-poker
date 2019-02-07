@@ -1,6 +1,6 @@
 import { Suits } from "./suits";
 
-export class Deck {
+export class Deck implements IDeck {
   private cards: ICard[];
 
   constructor() {

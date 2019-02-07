@@ -1,10 +1,13 @@
-import { RoundRiverState } from "./round-river-state";
-
 export class RoundTurnState implements IRoundState {
   constructor(private readonly round: IRoundStateContext) {}
 
   public activate(): void {
-    console.log("bets round turn");
+    const deck = this.round.getDeck();
+    const table = this.round.getTable();
+
+    table.addCards([deck.draw()]);
+
+    console.log("await bets round turn");
 
     setTimeout(() => {
       this.process();

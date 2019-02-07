@@ -1,4 +1,4 @@
-import { Table } from "../table";
+import { Deck } from "../deck";
 import { RoundIdleState } from "./round-idle-state";
 import { RoundPreflopState } from "./round-preflop-state";
 import { RoundFlopState } from "./round-flop-state";
@@ -7,7 +7,7 @@ import { RoundRiverState } from "./round-river-state";
 import { RoundShowdownState } from "./round-showdown-state";
 
 interface IRoundConfig {
-  table: Table;
+  table: ITable;
 }
 
 export class Round implements IRoundStateContext {
@@ -21,6 +21,8 @@ export class Round implements IRoundStateContext {
     river: new RoundRiverState(this),
     showdown: new RoundShowdownState(this)
   };
+
+  private deck: IDeck = new Deck();
 
   constructor(private readonly config: IRoundConfig) {
     this.state = new RoundIdleState(this);
@@ -45,6 +47,14 @@ export class Round implements IRoundStateContext {
 
   public getUsers(): IUser[] {
     return this.config.table.getUsers();
+  }
+
+  public getDeck(): IDeck {
+    return this.deck;
+  }
+
+  public getTable(): ITable {
+    return this.config.table;
   }
 
   public isActive(): boolean {

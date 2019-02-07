@@ -2,7 +2,7 @@ interface ITableConfig {
   placesCount: number;
 }
 
-export class Table {
+export class Table implements ITable {
   private board: ICard[] = [];
 
   private places: (IUser | null)[] = Array.from({
@@ -23,11 +23,15 @@ export class Table {
     return this.places.filter(Boolean) as IUser[];
   }
 
-  public clearBoard(): void {
+  public clearCards(): void {
     this.board = [];
   }
 
-  public setBoard(cards: ICard): void {
+  public addCards(cards: ICard[]): void {
     this.board = this.board.concat(cards);
+  }
+
+  public getCards(): ICard[] {
+    return this.board;
   }
 }
