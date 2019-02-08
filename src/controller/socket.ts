@@ -25,7 +25,8 @@ export class Socket extends events.EventEmitter {
       try {
         const command = JSON.parse(message.toString());
         this.emit("command", { user, command });
-      } catch {
+      } catch (e) {
+        console.log(e);
         client.send(
           JSON.stringify({
             success: false,

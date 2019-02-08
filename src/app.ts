@@ -16,7 +16,13 @@ socket.listen();
 
 const players = new Map<string, IPlayer>();
 
-socket.on("disconnect", params => {});
+socket.on("disconnect", (params: { user: IUser }) => {
+  const player = players.get(params.user.getId());
+
+  if (player) {
+    game.removePlayer(player);
+  }
+});
 
 socket.on("command", (params: { user: IUser; command: { type: string } }) => {
   if (params.command.type === "join") {
@@ -25,11 +31,11 @@ socket.on("command", (params: { user: IUser; command: { type: string } }) => {
     players.set(params.user.getId(), player);
 
     game.addPlayer(player);
-  } else if (params.command.type === "check") {
+  } else if (["check", "fold"].includes(params.command.type)) {
     const player = players.get(params.user.getId());
 
     if (player) {
-      player.check();
+      player.trade(params.command as ITradingAction);
     }
   }
 });

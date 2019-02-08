@@ -7,7 +7,7 @@ interface IPlayerConfig {
 export class Player implements IPlayer {
   private hand: ICard[] = [];
 
-  private trade: defer.DeferredPromise<void> | null = null;
+  private deferredTrade: defer.DeferredPromise<ITradingAction> | null = null;
 
   constructor(private readonly config: IPlayerConfig) {}
 
@@ -19,17 +19,18 @@ export class Player implements IPlayer {
     this.hand = hand;
   }
 
-  public check(): void {
-    if (!this.trade) {
+  public trade(action: ITradingAction): void {
+    if (!this.deferredTrade) {
       throw new Error("Unavailable action");
     }
 
-    this.trade.resolve();
+    this.deferredTrade.resolve(action);
+    this.deferredTrade = null;
   }
 
-  public acceptTrade(): Promise<void> {
-    this.trade = defer();
+  public acceptTrade(): Promise<ITradingAction> {
+    this.deferredTrade = defer();
 
-    return this.trade.promise;
+    return this.deferredTrade.promise;
   }
 }

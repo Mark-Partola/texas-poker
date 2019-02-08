@@ -7,11 +7,21 @@ interface IUser {
   getId(): string;
 }
 
+interface ITradingCheckAction {
+  type: "check";
+}
+
+interface ITradingFoldAction {
+  type: "fold";
+}
+
+type ITradingAction = ITradingCheckAction | ITradingFoldAction;
+
 interface IPlayer {
   getId(): string;
-  acceptTrade(): Promise<void>;
+  acceptTrade(): Promise<ITradingAction>;
   setHand(cards: ICard[]): void;
-  check(): void;
+  trade(command: ITradingAction): void;
 }
 
 interface IUserFactory {

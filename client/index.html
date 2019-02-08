@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+      .controls {
+        display: flex;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="controls">
+      <button onclick="handleJoin()">Join to game</button>
+      <button onclick="handleCheck()">Check</button>
+      <button onclick="handleFold()">Fold</button>
+    </div>
+
+    <script>
+      const client = new WebSocket("ws://127.0.0.1:8080");
+
+      client.addEventListener("message", console.log);
+
+      function handleJoin() {
+        client.send(
+          JSON.stringify({
+            type: "join"
+          })
+        );
+      }
+
+      function handleCheck() {
+        client.send(
+          JSON.stringify({
+            type: "check"
+          })
+        );
+      }
+
+      function handleFold() {
+        client.send(
+          JSON.stringify({
+            type: "fold"
+          })
+        );
+      }
+    </script>
+  </body>
+</html>
