@@ -7,8 +7,10 @@ export class Trading implements ITrading {
 
   constructor(private readonly config: ITradingProps) {}
 
-  public async start(): Promise<void> {
+  public async start(): Promise<ITradingResult> {
     const players = this.config.players;
+
+    const remainsPlayers = [];
 
     for (let player of players) {
       const action = await Promise.race([
@@ -16,11 +18,17 @@ export class Trading implements ITrading {
         player.acceptTrade()
       ]);
 
-      console.log(action);
+      if (action.type !== "fold") {
+        remainsPlayers.push(player);
+      }
     }
+
+    return {
+      players: remainsPlayers
+    };
   }
 
-  private setTimeout() {
+  private setTimeout(): Promise<ITradingFoldAction> {
     return new Promise(resolve =>
       setTimeout(() => resolve({ type: "fold" }), Trading.TIMEOUT)
     );

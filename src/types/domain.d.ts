@@ -43,7 +43,11 @@ interface ITable {
 }
 
 interface ITrading {
-  start(): Promise<void>;
+  start(): Promise<ITradingResult>;
+}
+
+interface ITradingResult {
+  players: IPlayer[];
 }
 
 interface IRoundState {
@@ -66,5 +70,5 @@ interface IRoundStateContext {
   getPlayers(): IPlayer[];
   getDeck(): IDeck;
   getTable(): ITable;
-  trade(): Promise<void>;
+  trade(): Promise<ITradingResult>;
 }

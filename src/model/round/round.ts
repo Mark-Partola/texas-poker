@@ -58,7 +58,7 @@ export class Round implements IRoundStateContext {
     return this.config.table;
   }
 
-  public trade(): Promise<void> {
+  public trade(): Promise<ITradingResult> {
     const players = this.getPlayers();
     const trading = new Trading({ players });
 
