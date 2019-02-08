@@ -12,6 +12,7 @@
   "license": "ISC",
   "devDependencies": {
     "@types/dotenv": "^6.1.0",
+    "@types/p-defer": "^1.0.3",
     "@types/uuid": "^3.4.4",
     "@types/ws": "^6.0.1",
     "nodemon": "^1.18.9",
@@ -25,6 +26,7 @@
   "dependencies": {
     "@vaalentin/game-loop": "^1.0.2",
     "dotenv": "^6.2.0",
+    "p-defer": "^1.0.0",
     "uuid": "^3.3.2",
     "ws": "^6.1.3"
   }

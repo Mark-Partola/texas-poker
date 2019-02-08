@@ -1,7 +1,7 @@
 import { User } from "./user";
 
 export class UserFactory implements IUserFactory {
-  produce() {
+  produce(): IUser {
     return new User();
   }
 }

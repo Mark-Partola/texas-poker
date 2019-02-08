@@ -5,7 +5,7 @@ export class RoundShowdownState implements IRoundState {
     console.log("split pot");
 
     console.log(this.round.getTable().getCards());
-    console.log(this.round.getUsers());
+    console.log(this.round.getPlayers());
   }
 
   public process(): void {}

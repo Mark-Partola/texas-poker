@@ -3,9 +3,9 @@ export class RoundPreflopState implements IRoundState {
 
   public activate(): void {
     const deck = this.round.getDeck();
-    const users = this.round.getUsers();
+    const players = this.round.getPlayers();
 
-    users.forEach(user => user.setHand([deck.draw(), deck.draw()]));
+    players.forEach(player => player.setHand([deck.draw(), deck.draw()]));
 
     console.log("await bets round preflop");
 

@@ -5,7 +5,13 @@ interface ICard {
 
 interface IUser {
   getId(): string;
+}
+
+interface IPlayer {
+  getId(): string;
+  acceptTrade(): Promise<void>;
   setHand(cards: ICard[]): void;
+  check(): void;
 }
 
 interface IUserFactory {
@@ -18,9 +24,9 @@ interface IDeck {
 }
 
 interface ITable {
-  addUser(user: IUser, placeIdx: number): void;
-  removeUser(user: IUser): void;
-  getUsers(): IUser[];
+  addPlayer(player: IPlayer, placeIdx: number): void;
+  removePlayer(player: IPlayer): void;
+  getPlayers(): IPlayer[];
   clearCards(): void;
   addCards(cards: ICard[]): void;
   getCards(): ICard[];
@@ -47,7 +53,7 @@ interface IRoundStates {
 interface IRoundStateContext {
   setState(state: IRoundState): void;
   getStates(): IRoundStates;
-  getUsers(): IUser[];
+  getPlayers(): IPlayer[];
   getDeck(): IDeck;
   getTable(): ITable;
   trade(): Promise<void>;

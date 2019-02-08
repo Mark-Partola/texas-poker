@@ -1,11 +1,15 @@
 interface ITradingProps {
-  users: IUser[];
+  players: IPlayer[];
 }
 
 export class Trading implements ITrading {
   constructor(private readonly config: ITradingProps) {}
 
-  public start(): Promise<void> {
-    return new Promise(resolve => setTimeout(resolve, 2000));
+  public async start(): Promise<void> {
+    const awaitedTraders = this.config.players.map(player =>
+      player.acceptTrade()
+    );
+
+    await Promise.all(awaitedTraders);
   }
 }

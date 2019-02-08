@@ -5,31 +5,41 @@ interface ITableConfig {
 export class Table implements ITable {
   private board: ICard[] = [];
 
-  private places: (IUser | null)[] = Array.from(
+  private places: (IPlayer | null)[] = Array.from(
     { length: this.config.placesCount },
     () => null
   );
 
   constructor(private readonly config: ITableConfig) {}
 
-  public addUser(user: IUser, placeIdx?: number): void {
-    if (this.places.includes(user)) {
-      throw new Error("User already at the table");
+  public addPlayer(player: IPlayer, placeIdx?: number): void {
+    const alreadyAtTable = Boolean(
+      this.places.find(placedPlayer =>
+        Boolean(placedPlayer && placedPlayer.getId() === player.getId())
+      )
+    );
+
+    if (alreadyAtTable) {
+      throw new Error("Player already at the table");
     }
 
     const idx = placeIdx
       ? placeIdx
       : this.places.findIndex(place => place === null);
 
-    this.places[idx] = user;
+    this.places[idx] = player;
   }
 
-  public removeUser(user: IUser): void {
-    this.places = this.places.map(place => (place === user ? null : place));
+  public removePlayer(player: IPlayer): void {
+    this.places = this.places.map(placedPlayer =>
+      placedPlayer && placedPlayer.getId() === player.getId()
+        ? null
+        : placedPlayer
+    );
   }
 
-  public getUsers(): IUser[] {
-    return this.places.filter(Boolean) as IUser[];
+  public getPlayers(): IPlayer[] {
+    return this.places.filter(Boolean) as IPlayer[];
   }
 
   public clearCards(): void {

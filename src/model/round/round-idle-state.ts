@@ -2,9 +2,9 @@ export class RoundIdleState implements IRoundState {
   constructor(private readonly round: IRoundStateContext) {}
 
   public activate(): void {
-    const users = this.round.getUsers();
+    const players = this.round.getPlayers();
 
-    if (users.length > 1) {
+    if (players.length > 1) {
       this.process();
     }
   }

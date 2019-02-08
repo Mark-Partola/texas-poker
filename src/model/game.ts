@@ -2,39 +2,39 @@ import { Table } from "./table";
 import { Round } from "./round/round";
 
 interface IGameConfig {
-  usersCount: number;
+  playersCount: number;
 }
 
 export class Game {
   private table = new Table({
-    placesCount: this.config.usersCount
+    placesCount: this.config.playersCount
   });
 
   private round: Round = new Round({
     table: this.table
   });
 
-  private usersCount: number = 0;
+  private playersCount: number = 0;
 
   constructor(private readonly config: IGameConfig) {}
 
-  public addUser(user: IUser, placeIdx?: number) {
-    if (this.usersCount >= this.config.usersCount) {
+  public addPlayer(player: IPlayer, placeIdx?: number) {
+    if (this.playersCount >= this.config.playersCount) {
       throw new Error("No places left");
     }
 
-    this.table.addUser(user, placeIdx);
+    this.table.addPlayer(player, placeIdx);
 
-    this.usersCount++;
+    this.playersCount++;
 
-    if (this.usersCount > 1 && !this.round.isActive()) {
+    if (this.playersCount > 1 && !this.round.isActive()) {
       this.round.start();
     }
   }
 
-  public removeUser(user: IUser): void {
-    this.usersCount--;
+  public removePlayer(player: IPlayer): void {
+    this.playersCount--;
 
-    this.table.removeUser(user);
+    this.table.removePlayer(player);
   }
 }

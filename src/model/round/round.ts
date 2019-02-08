@@ -46,8 +46,8 @@ export class Round implements IRoundStateContext {
     return this.states;
   }
 
-  public getUsers(): IUser[] {
-    return this.config.table.getUsers();
+  public getPlayers(): IPlayer[] {
+    return this.config.table.getPlayers();
   }
 
   public getDeck(): IDeck {
@@ -59,8 +59,8 @@ export class Round implements IRoundStateContext {
   }
 
   public trade(): Promise<void> {
-    const users = this.getUsers();
-    const trading = new Trading({ users });
+    const players = this.getPlayers();
+    const trading = new Trading({ players });
 
     return trading.start();
   }
