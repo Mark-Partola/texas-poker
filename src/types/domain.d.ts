@@ -15,7 +15,17 @@ interface ITradingFoldAction {
   type: "fold";
 }
 
-type ITradingAction = ITradingCheckAction | ITradingFoldAction;
+interface ITradingRaiseAction {
+  type: "raise";
+  payload: {
+    value: number;
+  };
+}
+
+type ITradingAction =
+  | ITradingCheckAction
+  | ITradingFoldAction
+  | ITradingRaiseAction;
 
 interface IPlayer {
   getId(): string;

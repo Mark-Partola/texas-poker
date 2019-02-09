@@ -5,27 +5,58 @@ interface ITradingProps {
 export class Trading implements ITrading {
   private static readonly TIMEOUT = 10000;
 
-  constructor(private readonly config: ITradingProps) {}
+  private activePlayers: IPlayer[] = [];
+
+  private pot: number = 0;
+
+  constructor(private readonly config: ITradingProps) {
+    this.activePlayers = [...config.players];
+  }
 
   public async start(): Promise<ITradingResult> {
-    const players = this.config.players;
+    while (!this.isBalanced()) {
+      await this.startTradeRound();
+    }
 
-    const remainsPlayers = [];
+    return { players: this.activePlayers };
+  }
 
-    for (let player of players) {
+  private async startTradeRound() {
+    console.log("trade round started");
+
+    for (let i = 0; i < this.activePlayers.length; i++) {
+      if (this.activePlayers.length === 1) continue;
+
+      const player = this.activePlayers[i];
+
       const action = await Promise.race([
         this.setTimeout(),
         player.acceptTrade()
       ]);
 
-      if (action.type !== "fold") {
-        remainsPlayers.push(player);
+      if (action.type === "check") {
+        // TODO: нельзя чекать если был несбалансированный рейз.
+      }
+
+      if (action.type === "fold") {
+        const idx = this.activePlayers.findIndex(
+          (activePlayer: IPlayer) => activePlayer.getId() === player.getId()
+        );
+
+        this.activePlayers.splice(idx, 1);
+      }
+
+      if (action.type === "raise") {
+        this.pot += action.payload.value;
       }
     }
+  }
 
-    return {
-      players: remainsPlayers
-    };
+  private isBalanced(): boolean {
+    return this.activePlayers.length === 1;
+    // первый - всегда
+    // если все чек - конец
+    // если рейз - следующие повышают, следующий круг
   }
 
   private setTimeout(): Promise<ITradingFoldAction> {

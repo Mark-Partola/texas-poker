@@ -16,12 +16,22 @@
       <button onclick="handleJoin()">Join to game</button>
       <button onclick="handleCheck()">Check</button>
       <button onclick="handleFold()">Fold</button>
+      <button onclick="handleRaise()">Raise</button>
+      <input oninput="handleAddRaise(this.value)" />
     </div>
 
     <script>
+      let raise = 0;
+
       const client = new WebSocket("ws://127.0.0.1:8080");
 
-      client.addEventListener("message", console.log);
+      client.addEventListener("message", event => {
+        const $p = document.createElement("p");
+        const msg = JSON.parse(event.data);
+        $p.textContent = msg.message;
+
+        document.body.appendChild($p);
+      });
 
       function handleJoin() {
         client.send(
@@ -45,6 +55,21 @@
             type: "fold"
           })
         );
+      }
+
+      function handleRaise() {
+        client.send(
+          JSON.stringify({
+            type: "raise",
+            payload: {
+              value: raise
+            }
+          })
+        );
+      }
+
+      function handleAddRaise(value) {
+        raise = +value;
       }
     </script>
   </body>
