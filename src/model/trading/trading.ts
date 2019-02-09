@@ -33,7 +33,7 @@ export class Trading implements ITrading {
     return { players };
   }
 
-  private async startTradeRound() {
+  private async startTradeRound(): Promise<void> {
     console.log("trade round started");
 
     for (let i = 0; i < this.players.length; i++) {
@@ -77,13 +77,13 @@ export class Trading implements ITrading {
     return this.isLeftOnePlayer() || this.isBalancedBets();
   }
 
-  private isLeftOnePlayer() {
+  private isLeftOnePlayer(): boolean {
     const activePlayersStates = this.getActivePlayersStates();
 
     return activePlayersStates.length === 1;
   }
 
-  private isBalancedBets() {
+  private isBalancedBets(): boolean {
     const activePlayersStates = this.getActivePlayersStates();
 
     const bets = Array.from(
