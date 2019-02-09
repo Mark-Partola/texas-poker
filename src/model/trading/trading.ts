@@ -9,7 +9,7 @@ interface IPlayerTradingState {
 }
 
 export class Trading implements ITrading {
-  private static readonly TIMEOUT = 10000;
+  private static readonly TIMEOUT = 30000;
 
   private players: IPlayerTradingState[] = [];
 
@@ -54,6 +54,10 @@ export class Trading implements ITrading {
       ]);
 
       console.log(action.type);
+
+      if (!availableActions.includes(action.type)) {
+        i--;
+      }
 
       if (action.type === "fold") {
         const idx = this.players.findIndex(

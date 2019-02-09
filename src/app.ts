@@ -31,7 +31,7 @@ socket.on("command", (params: { user: IUser; command: { type: string } }) => {
     players.set(params.user.id, player);
 
     game.addPlayer(player);
-  } else if (["check", "fold"].includes(params.command.type)) {
+  } else if (["check", "fold", "raise"].includes(params.command.type)) {
     const player = players.get(params.user.id);
 
     if (player) {
