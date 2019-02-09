@@ -15,7 +15,7 @@ export class Table implements ITable {
   public addPlayer(player: IPlayer, placeIdx?: number): void {
     const alreadyAtTable = Boolean(
       this.places.find(placedPlayer =>
-        Boolean(placedPlayer && placedPlayer.getId() === player.getId())
+        Boolean(placedPlayer && placedPlayer.id === player.id)
       )
     );
 
@@ -32,9 +32,7 @@ export class Table implements ITable {
 
   public removePlayer(player: IPlayer): void {
     this.places = this.places.map(placedPlayer =>
-      placedPlayer && placedPlayer.getId() === player.getId()
-        ? null
-        : placedPlayer
+      placedPlayer && placedPlayer.id === player.id ? null : placedPlayer
     );
   }
 

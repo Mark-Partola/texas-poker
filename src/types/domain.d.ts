@@ -4,7 +4,7 @@ interface ICard {
 }
 
 interface IUser {
-  getId(): string;
+  readonly id: string;
 }
 
 interface ITradingCheckAction {
@@ -28,8 +28,8 @@ type ITradingAction =
   | ITradingRaiseAction;
 
 interface IPlayer {
-  getId(): string;
-  acceptTrade(): Promise<ITradingAction>;
+  readonly id: string;
+  acceptTrade(availableActions: string[]): Promise<ITradingAction>;
   setHand(cards: ICard[]): void;
   trade(command: ITradingAction): void;
 }

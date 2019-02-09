@@ -17,7 +17,7 @@ socket.listen();
 const players = new Map<string, IPlayer>();
 
 socket.on("disconnect", (params: { user: IUser }) => {
-  const player = players.get(params.user.getId());
+  const player = players.get(params.user.id);
 
   if (player) {
     game.removePlayer(player);
@@ -28,11 +28,11 @@ socket.on("command", (params: { user: IUser; command: { type: string } }) => {
   if (params.command.type === "join") {
     const player = new Player({ user: params.user });
 
-    players.set(params.user.getId(), player);
+    players.set(params.user.id, player);
 
     game.addPlayer(player);
   } else if (["check", "fold"].includes(params.command.type)) {
-    const player = players.get(params.user.getId());
+    const player = players.get(params.user.id);
 
     if (player) {
       player.trade(params.command as ITradingAction);

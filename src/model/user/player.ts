@@ -11,8 +11,8 @@ export class Player implements IPlayer {
 
   constructor(private readonly config: IPlayerConfig) {}
 
-  public getId(): string {
-    return this.config.user.getId();
+  public get id(): string {
+    return this.config.user.id;
   }
 
   public setHand(hand: ICard[]): void {
@@ -28,7 +28,7 @@ export class Player implements IPlayer {
     this.deferredTrade = null;
   }
 
-  public acceptTrade(): Promise<ITradingAction> {
+  public acceptTrade(availableActions: string[]): Promise<ITradingAction> {
     this.deferredTrade = defer();
 
     return this.deferredTrade.promise;
