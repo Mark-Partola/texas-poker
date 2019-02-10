@@ -1,6 +1,7 @@
 interface ICard {
   suit: number;
   value: number;
+  name: string;
 }
 
 interface IUser {
@@ -76,6 +77,7 @@ interface IRoundStates {
 }
 
 interface IRoundStateContext {
+  start(config: { players: IPlayer[] }): void;
   setState(state: IRoundState): void;
   getStates(): IRoundStates;
   getPlayers(): IPlayer[];

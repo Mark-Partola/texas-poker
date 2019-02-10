@@ -2,11 +2,25 @@ export class RoundShowdownState implements IRoundState {
   constructor(private readonly round: IRoundStateContext) {}
 
   public activate(): void {
-    console.log("split bank: ", this.round.getBank());
+    const players = this.round.getPlayers();
+    const bank = this.round.getBank();
 
-    console.log(this.round.getTable().getCards());
-    console.log(this.round.getPlayers());
+    if (players.length === 1) {
+      const winner = this.getWinnerLog(players[0]);
+      console.log(`Player ${winner} wins ${bank} tokens.`);
+    } else {
+      const board = this.round.getTable().getCards();
+      const boardLog = board.map(card => card.name).join(", ") || "nope";
+      console.log(`Card on board: ${boardLog}`);
+
+      const winners = players.map(p => this.getWinnerLog(p)).join(", ");
+      console.log(`Players ${winners} split ${bank} tokens.`);
+    }
   }
 
   public process(): void {}
+
+  private getWinnerLog(player: IPlayer): string {
+    return `#${player.id.slice(0, 5)}`;
+  }
 }

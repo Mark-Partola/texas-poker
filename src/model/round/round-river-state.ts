@@ -9,6 +9,8 @@ export class RoundRiverState implements IRoundState {
 
     console.log("await bets round river");
     console.log("current bank: ", this.round.getBank());
+
+    this.round.trade();
   }
 
   public process(): void {

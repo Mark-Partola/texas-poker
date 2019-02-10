@@ -1,4 +1,5 @@
 import { Suits } from "./suits";
+import { Card } from "./card";
 
 export class Deck implements IDeck {
   private cards: ICard[];
@@ -26,7 +27,7 @@ export class Deck implements IDeck {
 
     return values.reduce(
       (acc, value) => {
-        suits.forEach(suit => acc.push({ suit, value }));
+        suits.forEach(suit => acc.push(new Card({ suit, value })));
 
         return acc;
       },

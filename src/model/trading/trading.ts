@@ -111,8 +111,6 @@ export class Trading implements ITrading {
   }
 
   private getBank(): number {
-    const playersStates = this.getActivePlayersStates();
-
-    return playersStates.reduce((acc, curr) => (acc += curr.bet), 0);
+    return this.players.reduce((acc, curr) => (acc += curr.bet), 0);
   }
 }

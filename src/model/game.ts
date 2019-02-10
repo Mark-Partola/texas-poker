@@ -27,8 +27,8 @@ export class Game {
 
     this.playersCount++;
 
-    if (this.playersCount > 1 && !this.round.isActive()) {
-      this.round.start();
+    if (!this.round.isActive()) {
+      this.round.start({ players: this.table.getPlayers() });
     }
   }
 

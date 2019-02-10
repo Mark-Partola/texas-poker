@@ -9,6 +9,8 @@ export class RoundTurnState implements IRoundState {
 
     console.log("await bets round turn");
     console.log("current bank: ", this.round.getBank());
+
+    this.round.trade();
   }
 
   public process(): void {
