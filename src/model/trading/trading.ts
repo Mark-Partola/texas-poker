@@ -1,5 +1,6 @@
 interface ITradingProps {
   players: IPlayer[];
+  blind: boolean;
 }
 
 interface IPlayerTradingState {
@@ -16,13 +17,16 @@ export class Trading implements ITrading {
   constructor(props: ITradingProps) {
     this.players = props.players.map((player, idx) => ({
       player,
-      bet: this.getBlind(idx),
+      bet: props.blind ? this.getBlind(idx) : 0,
       isActive: true
     }));
   }
 
   public async start(): Promise<ITradingResult> {
-    while (!this.isBalanced()) {
+    let isFirst = true;
+
+    while (isFirst || !this.isBalanced()) {
+      isFirst = false;
       await this.startTradeRound();
     }
 
@@ -30,12 +34,10 @@ export class Trading implements ITrading {
 
     const players = playersStates.map(state => state.player);
 
-    return { players };
+    return { players, bank: this.getBank() };
   }
 
   private async startTradeRound(): Promise<void> {
-    console.log("trade round started");
-
     for (let i = 0; i < this.players.length; i++) {
       const currentPlayerState = this.players[i];
 
@@ -52,8 +54,6 @@ export class Trading implements ITrading {
         this.setTimeout(),
         currentPlayerState.player.acceptTrade(availableActions)
       ]);
-
-      console.log(action.type);
 
       if (!availableActions.includes(action.type)) {
         i--;
@@ -108,5 +108,11 @@ export class Trading implements ITrading {
     if (playerIdx === 1) return 2;
 
     return 0;
+  }
+
+  private getBank(): number {
+    const playersStates = this.getActivePlayersStates();
+
+    return playersStates.reduce((acc, curr) => (acc += curr.bet), 0);
   }
 }

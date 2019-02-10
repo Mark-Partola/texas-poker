@@ -25,7 +25,12 @@ export class Round implements IRoundStateContext {
 
   private deck: IDeck = new Deck();
 
+  private players: IPlayer[];
+
+  private bank: number = 0;
+
   constructor(private readonly config: IRoundConfig) {
+    this.players = [...this.config.table.getPlayers()];
     this.state = new RoundIdleState(this);
   }
 
@@ -46,6 +51,11 @@ export class Round implements IRoundStateContext {
     return this.states;
   }
 
+  public setTradeResult(tradeResult: ITradingResult): void {
+    this.players = tradeResult.players;
+    this.bank += tradeResult.bank;
+  }
+
   public getPlayers(): IPlayer[] {
     return this.config.table.getPlayers();
   }
@@ -58,9 +68,19 @@ export class Round implements IRoundStateContext {
     return this.config.table;
   }
 
+  public getBank(): number {
+    return this.bank;
+  }
+
+  public addToBank(value: number): void {
+    this.bank += value;
+  }
+
   public trade(): Promise<ITradingResult> {
-    const players = this.getPlayers();
-    const trading = new Trading({ players });
+    const trading = new Trading({
+      players: this.getPlayers(),
+      blind: this.state instanceof RoundPreflopState
+    });
 
     return trading.start();
   }

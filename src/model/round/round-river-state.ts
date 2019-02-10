@@ -8,8 +8,12 @@ export class RoundRiverState implements IRoundState {
     table.addCards([deck.draw()]);
 
     console.log("await bets round river");
+    console.log("current bank: ", this.round.getBank());
 
-    this.round.trade().then(() => this.process());
+    this.round.trade().then(tradeResult => {
+      this.round.setTradeResult(tradeResult);
+      this.process();
+    });
   }
 
   public process(): void {

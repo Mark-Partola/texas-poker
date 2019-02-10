@@ -58,6 +58,7 @@ interface ITrading {
 
 interface ITradingResult {
   players: IPlayer[];
+  bank: number;
 }
 
 interface IRoundState {
@@ -78,7 +79,9 @@ interface IRoundStateContext {
   setState(state: IRoundState): void;
   getStates(): IRoundStates;
   getPlayers(): IPlayer[];
+  setTradeResult(tradeResult: ITradingResult): void;
   getDeck(): IDeck;
   getTable(): ITable;
+  getBank(): number;
   trade(): Promise<ITradingResult>;
 }
