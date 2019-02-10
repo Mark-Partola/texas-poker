@@ -8,11 +8,6 @@ export class RoundPreflopState implements IRoundState {
     players.forEach(player => player.setHand([deck.draw(), deck.draw()]));
 
     console.log("await bets round preflop");
-
-    this.round.trade().then(tradeResult => {
-      this.round.setTradeResult(tradeResult);
-      this.process();
-    });
   }
 
   public process(): void {

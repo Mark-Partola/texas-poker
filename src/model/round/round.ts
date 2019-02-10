@@ -76,13 +76,18 @@ export class Round implements IRoundStateContext {
     this.bank += value;
   }
 
-  public trade(): Promise<ITradingResult> {
+  public trade(): void {
     const trading = new Trading({
       players: this.getPlayers(),
       blind: this.state instanceof RoundPreflopState
     });
 
-    return trading.start();
+    const tradingResultPromise = trading.start();
+
+    tradingResultPromise.then(tradingResult => {
+      this.setTradeResult(tradingResult);
+      this.state.process();
+    });
   }
 
   public isActive(): boolean {

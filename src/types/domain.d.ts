@@ -83,5 +83,5 @@ interface IRoundStateContext {
   getDeck(): IDeck;
   getTable(): ITable;
   getBank(): number;
-  trade(): Promise<ITradingResult>;
+  trade(): void;
 }
