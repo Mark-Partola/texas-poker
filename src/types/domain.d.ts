@@ -28,9 +28,14 @@ type ITradingAction =
   | ITradingFoldAction
   | ITradingRaiseAction;
 
+interface IPlayerAcceptTradeParams {
+  actions: string[];
+  minBet: number;
+}
+
 interface IPlayer {
   readonly id: string;
-  acceptTrade(availableActions: string[]): Promise<ITradingAction>;
+  acceptTrade(params: IPlayerAcceptTradeParams): Promise<ITradingAction>;
   setHand(cards: ICard[]): void;
   trade(command: ITradingAction): void;
 }

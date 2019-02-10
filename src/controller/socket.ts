@@ -26,11 +26,12 @@ export class Socket extends events.EventEmitter {
         const command = JSON.parse(message.toString());
         this.emit("command", { user, command });
       } catch (e) {
-        console.log(e);
+        console.log(e.message);
+
         client.send(
           JSON.stringify({
             success: false,
-            message: "Incorrect command"
+            message: e.message || "Incorrect command"
           })
         );
       }

@@ -45,6 +45,8 @@ export class Trading implements ITrading {
 
       if (!currentPlayerState.isActive) continue;
 
+      const minBet = this.getMinBet(currentPlayerState);
+
       const availableActions = ([] as string[])
         .concat("fold")
         .concat("raise")
@@ -52,7 +54,10 @@ export class Trading implements ITrading {
 
       const action = await Promise.race([
         this.setTimeout(),
-        currentPlayerState.player.acceptTrade(availableActions)
+        currentPlayerState.player.acceptTrade({
+          actions: availableActions,
+          minBet
+        })
       ]);
 
       if (!availableActions.includes(action.type)) {
@@ -68,7 +73,13 @@ export class Trading implements ITrading {
       }
 
       if (action.type === "raise") {
-        currentPlayerState.bet += action.payload.value;
+        const bet = action.payload.value;
+
+        if (minBet <= bet) {
+          currentPlayerState.bet += action.payload.value;
+        } else {
+          i--;
+        }
       }
     }
   }
@@ -108,6 +119,16 @@ export class Trading implements ITrading {
     if (playerIdx === 1) return 2;
 
     return 0;
+  }
+
+  private getMinBet(playerState: IPlayerTradingState): number {
+    const playersStates = this.getActivePlayersStates();
+
+    const prevRaisedPlayer = playersStates.find(
+      state => playerState.bet < state.bet
+    );
+
+    return prevRaisedPlayer ? prevRaisedPlayer.bet - playerState.bet : 0;
   }
 
   private getBank(): number {
