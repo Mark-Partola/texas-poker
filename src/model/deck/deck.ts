@@ -23,7 +23,7 @@ export class Deck implements IDeck {
 
   private getDeck(): ICard[] {
     const values = Array.from({ length: 13 }, (_, idx) => idx + 1);
-    const suits = [Suits.hearts, Suits.spades, Suits.diamonds, Suits.croses];
+    const suits = [Suits.Hearts, Suits.Spades, Suits.Diamonds, Suits.Clubs];
 
     return values.reduce(
       (acc, value) => {

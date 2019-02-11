@@ -1,6 +1,6 @@
 export enum Suits {
-  hearts,
-  spades,
-  diamonds,
-  croses
+  Hearts,
+  Spades,
+  Diamonds,
+  Clubs
 }

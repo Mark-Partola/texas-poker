@@ -1,3 +1,5 @@
+import { HandCalculator } from "../hand-calculator/hand-calculator";
+
 export class RoundShowdownState implements IRoundState {
   constructor(private readonly round: IRoundStateContext) {}
 
@@ -13,7 +15,11 @@ export class RoundShowdownState implements IRoundState {
       const boardLog = board.map(card => card.name).join(", ") || "nope";
       console.log(`Card on board: ${boardLog}`);
 
-      const winners = players.map(p => this.getWinnerLog(p)).join(", ");
+      const calculator = new HandCalculator({ players });
+
+      const winners = calculator.calculate();
+
+      const winnersLog = winners.map(p => this.getWinnerLog(p)).join(", ");
       console.log(`Players ${winners} split ${bank} tokens.`);
     }
   }
